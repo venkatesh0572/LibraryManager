@@ -1,4 +1,8 @@
 steps:
+- task: ManifestGeneratorTask@0
+  displayName: 'Generate SBOM For VSIX Insertion'
+  inputs:
+    BuildDropPath: '$(Build.SourcesDirectory)\bin\Microsoft.Web.LibraryManager.Vsix\Release'
 - task: MSBuild@1
   displayName: Build VS Installer Manifest
   inputs:
@@ -19,6 +23,7 @@ steps:
     contents: |
       bin/**/*.vsman
       bin/**/*.vsix
+      bin/**/sbom.json
       bin/InsertionParameters.txt
     targetFolder: $(Build.ArtifactStagingDirectory)/insertion
     flattenFolders: true
